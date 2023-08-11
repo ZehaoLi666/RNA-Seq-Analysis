@@ -37,7 +37,7 @@ for file in "$input_dir"/*; do
 done
 
 # Run all samples on parallel
-index=$(expr $SLURM_ARRAY_TASK_ID )
+index=$(expr $SLURM_ARRAY_TASK_ID )  # don'r need to - 1
 sample=${samples[$index]}
 echo $sample
 fastqc "${input_dir}/${sample}"  -o fastqc/results
