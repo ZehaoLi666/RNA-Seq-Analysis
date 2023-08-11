@@ -1,7 +1,7 @@
 #!/bin/bash  -l
 
 #SBATCH --nodes=1
-#SBATCH --array=1-33
+#SBATCH --array=1-32
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=10G
 #SBATCH --time=0-02:15:00 
@@ -22,10 +22,18 @@ samples=[]
 
 # Use a loop function to look through all files in the input directory and add sample names to `samples` array
 for file in "$input_dir"/*; do
-       filename=$(basename "$file")
-       # echo "$filename"
-       samples+=("$filename")
-       # echo $samples
+       if [ -f "$file" ]; then   
+              filename=$(basename "$file")
+       else
+              echo " $file is not a file "
+              # echo "$filename"
+              if [ -n "$filename" ]; then
+                     samples+=("$filename")
+                     # echo $samples
+              else 
+                     "Empty filename detected for file: $file"
+              fi
+       fi
 done
 
 # Run all samples on parallel
