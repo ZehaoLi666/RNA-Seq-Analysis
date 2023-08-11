@@ -1,7 +1,7 @@
 #!/bin/bash  -l
 
 #SBATCH --nodes=1
-#SBATCH --array=1-32
+#SBATCH --array=1-32         #depends on how mang files you are going to conduct
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=10G
 #SBATCH --time=0-02:15:00 
@@ -22,7 +22,7 @@ samples=[]
 
 # Use a loop function to look through all files in the input directory and add sample names to `samples` array
 for file in "$input_dir"/*; do
-       if [ -f "$file" ]; then   
+       if [ -f "$file" ]; then       # keep space around "$file"
               filename=$(basename "$file")
        else
               echo " $file is not a file "
